@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------
 // Promise, Async await
 
-function main() {
+function main(): void {
   console.log('start!');
 
   // Promise + Async function with await
@@ -33,11 +33,11 @@ function main() {
   // });
 }
 
-function delay(callback, time = 1000) {
+function delay(callback: () => void, time: number = 1000): void {
   setTimeout(callback, time);
 }
 
-function delayPromise(time = 1000) {
+function delayPromise(time: number = 1000): Promise<unknown> {
   return new Promise((resolve) => {
     setTimeout(resolve, time);
   });
