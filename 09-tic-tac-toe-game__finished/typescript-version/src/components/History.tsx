@@ -1,23 +1,33 @@
+import { PLAYER_TYPE } from '@/constants';
 import classes from '@/styles/Game.module.css';
-import { arrayOf, func, number } from 'prop-types';
-import { SquaresType } from './SquareList';
 
-function History({ squares, onTimeTraverl, gameIndex }) {
+interface Props {
+  boardRecords: PLAYER_TYPE[][];
+  onTimeTravel: (index: number) => () => void;
+  gameIndex: number;
+}
+
+function History({
+  boardRecords,
+  gameIndex,
+  onTimeTravel,
+}: Props): JSX.Element {
   return (
     <div className={classes.History}>
       <ol>
-        {squares.map((_, index) => {
+        {boardRecords.map((_, index) => {
           const isDisabled = gameIndex === index;
+          const disabledStyles = {
+            opacity: isDisabled ? 0.5 : 1,
+          };
 
           return (
             <li key={index}>
               <button
                 type="button"
                 disabled={isDisabled}
-                style={{
-                  opacity: isDisabled ? 0.5 : 1,
-                }}
-                onClick={onTimeTraverl(index)}
+                style={disabledStyles}
+                onClick={onTimeTravel(index)}
               >
                 {index === 0 ? '게임 시작!' : `게임 #${index}`}
               </button>
@@ -28,11 +38,5 @@ function History({ squares, onTimeTraverl, gameIndex }) {
     </div>
   );
 }
-
-History.propTypes = {
-  squares: arrayOf(SquaresType),
-  gameIndex: number,
-  onTimeTraverl: func,
-};
 
 export default History;
